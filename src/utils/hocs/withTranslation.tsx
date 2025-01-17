@@ -9,12 +9,15 @@ interface WithTranslationProps {
 const withTranslation = <T extends object>(
   WrappedComponent: ComponentType<T & WithTranslationProps>,
   path: string
-): ComponentType<T> => {
-  return function ComponentWithTranslation(props: T) {
+): ComponentType<Omit<T, keyof WithTranslationProps>> => {
+  return function ComponentWithTranslation(
+    props: Omit<T, keyof WithTranslationProps>
+  ) {
     const { language } = useLanguage();
 
     const [translations, setTranslations] = useState<any | null>(null);
     const [error, setError] = useState<string | null>(null);
+
     useEffect(() => {
       const importTranslations = async () => {
         try {
@@ -39,7 +42,7 @@ const withTranslation = <T extends object>(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [path, language]);
 
-    const buildTranslationFunction = () => {
+    const buildTranslationPath = (): ((textPath: string) => string) => {
       return (textPath: string): string => {
         if (!translations) {
           console.error(
@@ -65,7 +68,7 @@ const withTranslation = <T extends object>(
       return <div>Loading...</div>;
     }
 
-    const t = buildTranslationFunction();
+    const t = buildTranslationPath();
 
     return <WrappedComponent {...(props as T)} t={t} />;
   };
