@@ -1,8 +1,8 @@
-import withTranslation from "utils/hocs/withTranslation";
+import withTranslation, { t } from "hocs/withTranslation/withTranslation";
 import LanguageSelector from "./components/LanguageSelector/LanguageSelector";
 
 interface LandingPageProps {
-  t: any;
+  t: t;
 }
 
 export const LandingPage = ({ t }: LandingPageProps) => {

@@ -1,19 +1,19 @@
-import { Select } from "antd";
-import { useLanguage } from "utils/hooks/useLanguage";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import { useLanguage } from "hooks/useLanguage/useLanguage";
 
 export const LanguageSelector = () => {
   const { language, setLanguage } = useLanguage();
 
+  const handleChange = (event: SelectChangeEvent) => {
+    setLanguage(event.target.value as string);
+  };
+
   return (
-    <Select
-      value={language}
-      style={{ width: 120 }}
-      onChange={(i) => setLanguage(i)}
-      options={[
-        { value: "EN", label: "English" },
-        { value: "FR", label: "French" },
-      ]}
-    />
+    <Select value={language} style={{ width: 120 }} onChange={handleChange}>
+      <MenuItem value={"EN"}>English</MenuItem>
+      <MenuItem value={"FR"}>French</MenuItem>
+    </Select>
   );
 };
 

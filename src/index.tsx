@@ -1,8 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import { LanguageProvider } from "./utils/hooks/useLanguage";
+import { LanguageProvider } from "./hooks/useLanguage/useLanguage";
 import App from "./App";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -10,8 +13,10 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <LanguageProvider>
-      <App />
-    </LanguageProvider>
+    <QueryClientProvider client={queryClient}>
+      <LanguageProvider>
+        <App />
+      </LanguageProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );

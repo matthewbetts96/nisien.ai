@@ -1,9 +1,11 @@
 import { ComponentType, useEffect, useState } from "react";
-import { useLanguage } from "../hooks/useLanguage";
+import { useLanguage } from "../../hooks/useLanguage/useLanguage";
 import flatten from "utils/flatten/flatten";
 
+export type t = (textPath: string) => string;
+
 interface WithTranslationProps {
-  t: (textPath: string) => string;
+  t: t;
 }
 
 const withTranslation = <T extends object>(
@@ -15,7 +17,10 @@ const withTranslation = <T extends object>(
   ) {
     const { language } = useLanguage();
 
-    const [translations, setTranslations] = useState<any | null>(null);
+    const [translations, setTranslations] = useState<Record<
+      string,
+      string
+    > | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -28,7 +33,7 @@ const withTranslation = <T extends object>(
         } catch (err) {
           setError("Error loading translation file");
           console.error(
-            `Error for path ../../translations/${path}/${language}.json`,
+            `Error for path translations/${path}/${language}.json`,
             err
           );
         }
