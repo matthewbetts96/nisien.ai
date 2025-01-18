@@ -1,11 +1,13 @@
-import LandingPage from "pages/LandingPage/LandingPage";
-import "./App.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AppRoutes from "routes/AppRoutes";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <div className="App">
-      <LandingPage />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <AppRoutes />
+    </QueryClientProvider>
   );
 }
 
