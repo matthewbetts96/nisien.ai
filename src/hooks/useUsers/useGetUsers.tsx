@@ -6,7 +6,7 @@ export const useGetUsers = () => {
   return useQuery({
     queryKey: ["users"],
     queryFn: async (): Promise<any> => {
-      const response = await apiClient.get("/v1/Users");
+      const response = await apiClient.get("/Users");
       return await response.data;
     },
     staleTime: STALE_TIME,

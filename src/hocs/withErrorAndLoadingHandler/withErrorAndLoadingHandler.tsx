@@ -14,7 +14,7 @@ interface ErrorAndLoadingHandlerProps {
  * retrying any failed requests
  */
 
-const withErrorAndLoadingHandler = ({
+export const withErrorAndLoadingHandler = ({
   isLoading,
   error,
   refetch,
@@ -43,8 +43,6 @@ const withErrorAndLoadingHandler = ({
 
   return children;
 };
-
-export default withErrorAndLoadingHandler;
 
 // const LoadingContainer = styled.div`
 //   width: 100%;
