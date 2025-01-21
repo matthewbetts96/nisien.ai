@@ -1,4 +1,6 @@
 import { useUpdateDrinkOrder } from "hooks/useDrinkOrder/useUpdateDrinkOrder";
+import { useGetDrinkRun } from "hooks/useDrinkRun/useGetDrinkRun";
+import { useUpdateDrinkRun } from "hooks/useDrinkRun/useUpdateDrinkRun";
 import { useGetUsers } from "hooks/useUsers/useGetUsers";
 import { useCreateUser } from "hooks/useUsers/useUpdateUsers";
 import React, { createContext, useState, useContext, ReactNode } from "react";
@@ -42,6 +44,8 @@ interface DrinkRunContextProps {
   handleAddDrinkOrder: () => void;
   clearErrors: () => void;
   setNewUser: any;
+
+  createNewDrinkRun: () => void;
 }
 
 export interface DrinkRunError {
@@ -73,6 +77,8 @@ export const DrinkRunProvider: React.FC<DrinkRunProviderProps> = ({
   const { mutate: addUser } = useCreateUser();
   const { refetch } = useGetUsers();
   const { mutate: addDrinkOrder } = useUpdateDrinkOrder();
+  const { mutate: createDrinkRun } = useUpdateDrinkRun();
+  const { refetch: refetchDrinkRun } = useGetDrinkRun();
 
   const addNewUser = (title: string) => {
     const [firstName, lastName] = title.split(/ (.*)/);
@@ -86,7 +92,6 @@ export const DrinkRunProvider: React.FC<DrinkRunProviderProps> = ({
       { firstName, lastName },
       {
         onSuccess: (data: any) => {
-          console.log("User added successfully:", data);
           setNewUser(data);
           refetch();
         },
@@ -121,7 +126,6 @@ export const DrinkRunProvider: React.FC<DrinkRunProviderProps> = ({
   };
 
   const addNewDrinkRunUser = (order: User) => {
-    console.log("order", order);
     setDrinkRunUsers((prevUsers: User[]) => {
       if (prevUsers.some((user: User) => user.id === order.id)) {
         return prevUsers;
@@ -164,7 +168,6 @@ export const DrinkRunProvider: React.FC<DrinkRunProviderProps> = ({
       },
       {
         onSuccess: (data: any) => {
-          console.log("Drink for user added successfully:", data);
           addNewDrinkRunUser({
             id: newUser.id,
             firstName: newUser.firstName,
@@ -186,6 +189,28 @@ export const DrinkRunProvider: React.FC<DrinkRunProviderProps> = ({
     clearErrors();
   };
 
+  const createNewDrinkRun = () => {
+    createDrinkRun(
+      {
+        participants: drinkRunUsers.map((i) => ({ userId: i.id?.toString() })),
+      },
+      {
+        onSuccess: (data: any) => {
+          setNewUser(data);
+          refetch();
+          refetchDrinkRun();
+        },
+        onError: (apiError: any) => {
+          setError({
+            ...error,
+            user: "An error occurred, please try again later.",
+          });
+          console.error("Error adding user:", apiError);
+        },
+      }
+    );
+  };
+
   return (
     <DrinkRunContext.Provider
       value={{
@@ -203,6 +228,7 @@ export const DrinkRunProvider: React.FC<DrinkRunProviderProps> = ({
         handleAddDrinkOrder,
         clearErrors,
         setNewUser,
+        createNewDrinkRun,
       }}
     >
       {children}

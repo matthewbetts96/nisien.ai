@@ -18,7 +18,8 @@ const style = {
 };
 
 export const NewDrinkRun = ({ open, setOpen }: any) => {
-  const { clearDrinkRunUsers, clearNewUser, clearErrors } = useDrinkRun();
+  const { clearDrinkRunUsers, clearNewUser, clearErrors, createNewDrinkRun } =
+    useDrinkRun();
 
   const handleClose = () => {
     clearNewUser();
@@ -38,7 +39,14 @@ export const NewDrinkRun = ({ open, setOpen }: any) => {
         <SelectUsersDrink />
         <DrinkRunUsersTable />
 
-        <Button>Create drink run</Button>
+        <Button
+          onClick={() => {
+            createNewDrinkRun();
+            handleClose();
+          }}
+        >
+          Create drink run
+        </Button>
       </Box>
     </Modal>
   );

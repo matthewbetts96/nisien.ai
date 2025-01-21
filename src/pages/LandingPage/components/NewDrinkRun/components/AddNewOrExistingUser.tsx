@@ -3,7 +3,8 @@ import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import withTranslation from "hocs/withTranslation/withTranslation";
 import { useGetUsers } from "hooks/useUsers/useGetUsers";
 import { withErrorAndLoadingHandler as ErrorAndLoadingHandler } from "hocs/withErrorAndLoadingHandler/withErrorAndLoadingHandler";
-import useDrinkRun, { User } from "context/DrinkRunContext";
+import useDrinkRun, { DrinkOrder, User } from "context/DrinkRunContext";
+import { useGetDrinkRun } from "hooks/useDrinkRun/useGetDrinkRun";
 
 const filter = createFilterOptions<any>();
 
@@ -11,6 +12,19 @@ const AddNewOrExistingUser = () => {
   const { data = [], isLoading, error: getUserError, refetch } = useGetUsers();
 
   const { addNewUser, addNewDrinkRunUser, error, setNewUser } = useDrinkRun();
+
+  const { data: drinkRunData, isLoading: drinkDataLoading } = useGetDrinkRun();
+
+  if (drinkDataLoading) {
+    return <></>;
+  }
+  const usersAlreadyInDrinkRun = drinkRunData
+    .map((order: any) => order.orders.map((i: DrinkOrder) => i.userId))
+    .flat();
+
+  const foo = data.filter(
+    (user: any) => !usersAlreadyInDrinkRun.includes(user.id.toString())
+  );
 
   return (
     <ErrorAndLoadingHandler
@@ -28,7 +42,6 @@ const AddNewOrExistingUser = () => {
           } else if (newValue?.inputValue) {
             addNewUser(newValue.inputValue);
           } else {
-            console.log("newValue", newValue);
             //if the user already has a set drink, then we can directly add them
             if (!!newValue?.drinkOrders.length) {
               addNewDrinkRunUser(newValue);
@@ -56,7 +69,7 @@ const AddNewOrExistingUser = () => {
         clearOnBlur
         handleHomeEndKeys
         id="add-new-or-existing-user"
-        options={data}
+        options={foo}
         getOptionLabel={(option) => {
           if (typeof option === "string") return option;
           if (option.inputValue) return option.inputValue;

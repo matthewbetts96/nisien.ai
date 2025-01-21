@@ -14,6 +14,9 @@ import { withErrorAndLoadingHandler as ErrorAndLoadingHandler } from "hocs/withE
 export const DrinkRuns = () => {
   const { data, isLoading, error, refetch } = useGetDrinkRun();
 
+  console.log(data);
+  //todo table
+
   return (
     <ErrorAndLoadingHandler
       isLoading={isLoading}

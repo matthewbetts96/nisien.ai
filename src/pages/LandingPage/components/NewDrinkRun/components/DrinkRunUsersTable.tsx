@@ -16,8 +16,6 @@ export const DrinkRunUsersTable = () => {
     return <></>;
   }
 
-  console.log("drinkRunUsers", drinkRunUsers);
-
   return (
     <TableContainer component={Paper}>
       <Table aria-label="customized table">
