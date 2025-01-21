@@ -13,8 +13,9 @@
   "addDrinkType": "Add Drink Type",
   "addDrinkName": "Add Drink Name",
   "key": "Key",
-  "value": "value",
+  "value": "Value",
   "addDrink": "Add Drink",
   "drinkName": "Drink Name",
-  "drinkType": "Drink Type"
+  "drinkType": "Drink Type",
+  "currentUsers": "Currently added users:"
 }

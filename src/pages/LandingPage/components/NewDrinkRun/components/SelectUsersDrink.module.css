@@ -1,0 +1,5 @@
+.drinkDetailsContainer {
+  display: flex;
+  place-content: space-around;
+  margin: 10px;
+}

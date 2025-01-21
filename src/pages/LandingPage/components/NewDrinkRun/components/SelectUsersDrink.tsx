@@ -1,6 +1,7 @@
 import { Button, TextField, Typography } from "@mui/material";
 import withTranslation, { t } from "hocs/withTranslation/withTranslation";
 import useDrinkRun from "context/DrinkRunContext";
+import classes from "./SelectUsersDrink.module.css";
 
 interface SelectUsersDrinkProps {
   t: t;
@@ -53,7 +54,7 @@ export const SelectUsersDrink = ({ t }: SelectUsersDrinkProps) => {
 
   return (
     <div>
-      <div>
+      <div className={classes.drinkDetailsContainer}>
         <TextField
           error={!!error?.drinkChoice}
           helperText={error?.drinkChoice}
@@ -77,7 +78,7 @@ export const SelectUsersDrink = ({ t }: SelectUsersDrinkProps) => {
 
       {[...additionalSpecification, { key: "", value: "" }].map((spec, idx) => {
         return (
-          <div>
+          <div className={classes.drinkDetailsContainer}>
             <TextField
               error={!!error?.drinkChoice}
               helperText={error?.drinkChoice}
@@ -116,7 +117,11 @@ export const SelectUsersDrink = ({ t }: SelectUsersDrinkProps) => {
         );
       })}
 
-      <Button onClick={handleAddDrinkOrder} disabled={isDisabled()}>
+      <Button
+        variant={"outlined"}
+        onClick={handleAddDrinkOrder}
+        disabled={isDisabled()}
+      >
         {t("addDrink")}
       </Button>
     </div>

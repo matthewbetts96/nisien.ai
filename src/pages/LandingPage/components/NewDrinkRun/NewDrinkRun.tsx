@@ -4,24 +4,17 @@ import AddNewOrExistingUser from "./components/AddNewOrExistingUser";
 import SelectUsersDrink from "./components/SelectUsersDrink";
 import DrinkRunUsersTable from "./components/DrinkRunUsersTable";
 import useDrinkRun from "context/DrinkRunContext";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 600,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import classes from "./NewDrinkRun.module.css";
 
 interface CreateRunProps {
   t: t;
   open: boolean;
   setOpen: (open: boolean) => void;
 }
+
+const style = {
+  bgcolor: "background.paper",
+};
 
 export const NewDrinkRun = ({ open, setOpen, t }: CreateRunProps) => {
   const {
@@ -43,22 +36,29 @@ export const NewDrinkRun = ({ open, setOpen, t }: CreateRunProps) => {
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <Box sx={style}>
+      <Box sx={style} className={classes.centeredBox}>
         <Typography variant="h2" gutterBottom>
           {t("newRun")}
         </Typography>
         <AddNewOrExistingUser />
-        <SelectUsersDrink />
-        <DrinkRunUsersTable />
-        <Button
-          onClick={() => {
-            createNewDrinkRun();
-            handleClose();
-          }}
-          disabled={!drinkRunUsers.length}
-        >
-          {t("createRun")}
-        </Button>
+        <div className={classes.spacer}>
+          <SelectUsersDrink />
+        </div>
+        <div className={classes.spacer}>
+          <DrinkRunUsersTable />
+        </div>
+        <div className={classes.spacer}>
+          <Button
+            onClick={() => {
+              createNewDrinkRun();
+              handleClose();
+            }}
+            disabled={!drinkRunUsers.length}
+            variant={"outlined"}
+          >
+            {t("createRun")}
+          </Button>
+        </div>
       </Box>
     </Modal>
   );

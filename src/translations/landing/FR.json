@@ -16,5 +16,6 @@
   "value": "Valeur",
   "addDrink": "Ajouter une boisson",
   "drinkName": "Nom de la boisson",
-  "drinkType": "Type de boisson"
+  "drinkType": "Type de boisson",
+  "currentUsers": "Utilisateurs ajoutés actuellement"
 }

@@ -6,6 +6,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Typography,
 } from "@mui/material";
 import useDrinkRun from "context/DrinkRunContext";
 import withTranslation, { t } from "hocs/withTranslation/withTranslation";
@@ -22,28 +23,33 @@ const DrinkRunUsersTable = ({ t }: DrinkRunUsersTableProps) => {
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <TableCell>{t("firstName")}</TableCell>
-            <TableCell>{t("lastName")}</TableCell>
-            <TableCell>{t("drinkName")}</TableCell>
-            <TableCell>{t("drinkType")}</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {drinkRunUsers.map((row: any) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.firstName}</TableCell>
-              <TableCell>{row.lastName}</TableCell>
-              <TableCell>{row.drinkOrders[0].name || ""}</TableCell>
-              <TableCell>{row.drinkOrders[0].type || ""}</TableCell>
+    <div>
+      <Typography variant="h6" gutterBottom color="textPrimary">
+        {t("currentUsers")}
+      </Typography>
+      <TableContainer component={Paper}>
+        <Table aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <TableCell>{t("firstName")}</TableCell>
+              <TableCell>{t("lastName")}</TableCell>
+              <TableCell>{t("drinkName")}</TableCell>
+              <TableCell>{t("drinkType")}</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {drinkRunUsers.map((row: any) => (
+              <TableRow key={row.id}>
+                <TableCell>{row.firstName}</TableCell>
+                <TableCell>{row.lastName}</TableCell>
+                <TableCell>{row.drinkOrders[0].name || ""}</TableCell>
+                <TableCell>{row.drinkOrders[0].type || ""}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 };
 
