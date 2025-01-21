@@ -5,3 +5,9 @@
     width: 80%;
   }
 }
+
+.topBar {
+  padding: 10px;
+  justify-content: space-between;
+  display: flex;
+}

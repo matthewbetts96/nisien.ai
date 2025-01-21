@@ -1,5 +1,6 @@
 import Typography from "@mui/material/Typography/Typography";
 import withTranslation, { t } from "hocs/withTranslation/withTranslation";
+import classes from "./Header.module.css";
 
 interface HeaderProps {
   t: t;
@@ -7,12 +8,10 @@ interface HeaderProps {
 
 export const Header = ({ t }: HeaderProps) => {
   return (
-    <div>
-      <div>
-        <Typography variant="h2" gutterBottom>
-          {t("title")}
-        </Typography>
-      </div>
+    <div className={classes.title}>
+      <Typography variant="h2" gutterBottom color="textPrimary">
+        {t("title")}
+      </Typography>
     </div>
   );
 };

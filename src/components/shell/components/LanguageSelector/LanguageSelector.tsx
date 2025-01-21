@@ -10,7 +10,12 @@ export const LanguageSelector = () => {
   };
 
   return (
-    <Select value={language} style={{ width: 120 }} onChange={handleChange}>
+    <Select
+      variant="outlined"
+      value={language}
+      style={{ width: 120 }}
+      onChange={handleChange}
+    >
       <MenuItem value={"EN"}>English</MenuItem>
       <MenuItem value={"FR"}>French</MenuItem>
     </Select>
