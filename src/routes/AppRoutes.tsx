@@ -1,6 +1,5 @@
 import Shell from "components/shell/Shell";
 import LandingPage from "pages/LandingPage/LandingPage";
-import OrderPage from "pages/OrderPage/OrderPage";
 
 import { Route, Routes } from "react-router";
 
@@ -10,7 +9,6 @@ export const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<Shell />}>
         <Route index element={<LandingPage />} />
-        <Route index element={<OrderPage />} />
         <Route path="*" element={<div>Page Unknown</div>} />
       </Route>
     </Routes>

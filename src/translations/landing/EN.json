@@ -1,8 +1,20 @@
 {
-  "profile": {
-    "text": "ENGRISH"
-  },
-  "main": {
-    "videoPlayerNotSupported": "Your browser does not support the video tag."
-  }
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "drinkNum": "Number of Drinks",
+  "requestee": "Requestee",
+  "name": "Name",
+  "type": "Type",
+  "additionalSpec": "Additional Specification",
+  "newRun": "Create Drink Run",
+  "createRun": " Create Drink run",
+  "addNewUser ": "Add new user",
+  "addOrSelectNewUser": "Add or Select User",
+  "addDrinkType": "Add Drink Type",
+  "addDrinkName": "Add Drink Name",
+  "key": "Key",
+  "value": "value",
+  "addDrink": "Add Drink",
+  "drinkName": "Drink Name",
+  "drinkType": "Drink Type"
 }

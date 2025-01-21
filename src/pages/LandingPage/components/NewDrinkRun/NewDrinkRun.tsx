@@ -1,8 +1,8 @@
 import { Box, Button, Modal, Typography } from "@mui/material";
-import withTranslation from "hocs/withTranslation/withTranslation";
+import withTranslation, { t } from "hocs/withTranslation/withTranslation";
 import AddNewOrExistingUser from "./components/AddNewOrExistingUser";
 import SelectUsersDrink from "./components/SelectUsersDrink";
-import { DrinkRunUsersTable } from "./components/DrinkRunUsersTable";
+import DrinkRunUsersTable from "./components/DrinkRunUsersTable";
 import useDrinkRun from "context/DrinkRunContext";
 
 const style = {
@@ -17,7 +17,13 @@ const style = {
   p: 4,
 };
 
-export const NewDrinkRun = ({ open, setOpen }: any) => {
+interface CreateRunProps {
+  t: t;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}
+
+export const NewDrinkRun = ({ open, setOpen, t }: CreateRunProps) => {
   const {
     clearDrinkRunUsers,
     clearNewUser,
@@ -39,13 +45,11 @@ export const NewDrinkRun = ({ open, setOpen }: any) => {
     <Modal open={open} onClose={handleClose}>
       <Box sx={style}>
         <Typography variant="h2" gutterBottom>
-          Create Drink Run
+          {t("newRun")}
         </Typography>
-
         <AddNewOrExistingUser />
         <SelectUsersDrink />
         <DrinkRunUsersTable />
-
         <Button
           onClick={() => {
             createNewDrinkRun();
@@ -53,7 +57,7 @@ export const NewDrinkRun = ({ open, setOpen }: any) => {
           }}
           disabled={!drinkRunUsers.length}
         >
-          Create Drink run
+          {t("createRun")}
         </Button>
       </Box>
     </Modal>

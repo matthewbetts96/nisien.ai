@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
-import withTranslation from "hocs/withTranslation/withTranslation";
+import withTranslation, { t } from "hocs/withTranslation/withTranslation";
 import { useGetUsers } from "hooks/useUsers/useGetUsers";
 import { withErrorAndLoadingHandler as ErrorAndLoadingHandler } from "hocs/withErrorAndLoadingHandler/withErrorAndLoadingHandler";
 import useDrinkRun, { DrinkOrder, User } from "context/DrinkRunContext";
@@ -8,7 +8,11 @@ import { useGetDrinkRun } from "hooks/useDrinkRun/useGetDrinkRun";
 
 const filter = createFilterOptions<any>();
 
-const AddNewOrExistingUser = () => {
+interface AddNewOrExistingUserProps {
+  t: t;
+}
+
+const AddNewOrExistingUser = ({ t }: AddNewOrExistingUserProps) => {
   const { data = [], isLoading, error: getUserError, refetch } = useGetUsers();
 
   const { addNewUser, addNewDrinkRunUser, error, setNewUser } = useDrinkRun();
@@ -22,7 +26,7 @@ const AddNewOrExistingUser = () => {
     .map((order: any) => order.orders.map((i: DrinkOrder) => i.userId))
     .flat();
 
-  const foo = data.filter(
+  const filteredData = data.filter(
     (user: any) => !usersAlreadyInDrinkRun.includes(user.id.toString())
   );
 
@@ -60,7 +64,7 @@ const AddNewOrExistingUser = () => {
           if (inputValue !== "" && !isExisting) {
             filtered.push({
               inputValue,
-              title: `Add new user "${inputValue}"`,
+              title: `${t("addNewUser")} "${inputValue}"`,
             });
           }
           return filtered;
@@ -69,7 +73,7 @@ const AddNewOrExistingUser = () => {
         clearOnBlur
         handleHomeEndKeys
         id="add-new-or-existing-user"
-        options={foo}
+        options={filteredData}
         getOptionLabel={(option) => {
           if (typeof option === "string") return option;
           if (option.inputValue) return option.inputValue;
@@ -94,7 +98,7 @@ const AddNewOrExistingUser = () => {
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Add or Select User"
+            label={t("addOrSelectNewUser")}
             error={!!error.user}
             helperText={error.user}
           />

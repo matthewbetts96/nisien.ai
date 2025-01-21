@@ -8,8 +8,13 @@ import {
   TableBody,
 } from "@mui/material";
 import useDrinkRun from "context/DrinkRunContext";
+import withTranslation, { t } from "hocs/withTranslation/withTranslation";
 
-export const DrinkRunUsersTable = () => {
+interface DrinkRunUsersTableProps {
+  t: t;
+}
+
+const DrinkRunUsersTable = ({ t }: DrinkRunUsersTableProps) => {
   const { drinkRunUsers } = useDrinkRun();
 
   if (!drinkRunUsers.length) {
@@ -21,10 +26,10 @@ export const DrinkRunUsersTable = () => {
       <Table aria-label="customized table">
         <TableHead>
           <TableRow>
-            <TableCell>First Name</TableCell>
-            <TableCell>Last Name</TableCell>
-            <TableCell>Drink Name</TableCell>
-            <TableCell>Drink Type</TableCell>
+            <TableCell>{t("firstName")}</TableCell>
+            <TableCell>{t("lastName")}</TableCell>
+            <TableCell>{t("drinkName")}</TableCell>
+            <TableCell>{t("drinkType")}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -41,3 +46,5 @@ export const DrinkRunUsersTable = () => {
     </TableContainer>
   );
 };
+
+export default withTranslation(DrinkRunUsersTable, "landing");

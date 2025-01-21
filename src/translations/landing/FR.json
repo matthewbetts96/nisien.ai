@@ -1,8 +1,20 @@
 {
-  "profile": {
-    "text": "HON HON"
-  },
-  "main": {
-    "videoPlayerNotSupported": "HON HON"
-  }
+  "firstName": "Prénom",
+  "lastName": "Nom de famille",
+  "drinkNum": "Nombre de boissons",
+  "requestee": "Demandeur",
+  "name": "Nom",
+  "type": "Type",
+  "additionalSpec": "Spécification supplémentaire",
+  "newRun": "Créer un tour de boissons",
+  "createRun": "Créer un tour de boissons",
+  "addNewUser ": "Ajouter un nouvel utilisateur",
+  "addOrSelectNewUser": "Ajouter ou sélectionner un utilisateur",
+  "addDrinkType": "Ajouter un type de boisson",
+  "addDrinkName": "Ajouter un nom de boisson",
+  "key": "Clé",
+  "value": "Valeur",
+  "addDrink": "Ajouter une boisson",
+  "drinkName": "Nom de la boisson",
+  "drinkType": "Type de boisson"
 }

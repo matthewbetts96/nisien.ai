@@ -1,8 +1,12 @@
 import { Button, TextField, Typography } from "@mui/material";
-import withTranslation from "hocs/withTranslation/withTranslation";
+import withTranslation, { t } from "hocs/withTranslation/withTranslation";
 import useDrinkRun from "context/DrinkRunContext";
 
-export const SelectUsersDrink = () => {
+interface SelectUsersDrinkProps {
+  t: t;
+}
+
+export const SelectUsersDrink = ({ t }: SelectUsersDrinkProps) => {
   const {
     newUser,
     error,
@@ -53,21 +57,21 @@ export const SelectUsersDrink = () => {
         <TextField
           error={!!error?.drinkChoice}
           helperText={error?.drinkChoice}
-          label="Add Drink Name"
+          label={t("addDrinkName")}
           variant="outlined"
           onChange={handleChange("name")}
         />
         <TextField
           error={!!error?.drinkChoice}
           helperText={error?.drinkChoice}
-          label="Add Drink Type"
+          label={t("addDrinkType")}
           variant="outlined"
           onChange={handleChange("type")}
         />
       </div>
       <div>
         <Typography variant="h6" gutterBottom>
-          Additional Specifications
+          {t("additionalSpec")}
         </Typography>
       </div>
 
@@ -77,7 +81,7 @@ export const SelectUsersDrink = () => {
             <TextField
               error={!!error?.drinkChoice}
               helperText={error?.drinkChoice}
-              label="Key"
+              label={t("key")}
               variant="outlined"
               value={spec.key || ""}
               onChange={(e) => {
@@ -94,7 +98,7 @@ export const SelectUsersDrink = () => {
             <TextField
               error={!!error?.drinkChoice}
               helperText={error?.drinkChoice}
-              label="Value"
+              label={t("value")}
               variant="outlined"
               value={spec.value || ""}
               onChange={(e) => {
@@ -113,7 +117,7 @@ export const SelectUsersDrink = () => {
       })}
 
       <Button onClick={handleAddDrinkOrder} disabled={isDisabled()}>
-        Add drink
+        {t("addDrink")}
       </Button>
     </div>
   );

@@ -11,7 +11,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import withTranslation from "hocs/withTranslation/withTranslation";
+import withTranslation, { t } from "hocs/withTranslation/withTranslation";
 import {
   KeyboardArrowDown,
   KeyboardArrowUp,
@@ -21,7 +21,11 @@ import { useGetDrinkRun } from "hooks/useDrinkRun/useGetDrinkRun";
 import { withErrorAndLoadingHandler as ErrorAndLoadingHandler } from "hocs/withErrorAndLoadingHandler/withErrorAndLoadingHandler";
 import { useState } from "react";
 
-export const DrinkRuns = () => {
+interface DrinkRunsProps {
+  t: t;
+}
+
+export const DrinkRuns = ({ t }: DrinkRunsProps) => {
   const { data = [], isLoading, error, refetch } = useGetDrinkRun();
 
   return (
@@ -35,14 +39,14 @@ export const DrinkRuns = () => {
           <TableHead>
             <TableRow>
               <TableCell></TableCell>
-              <TableCell>First Name</TableCell>
-              <TableCell>Last Name</TableCell>
-              <TableCell>Number of Drinks</TableCell>
+              <TableCell>{t("firstName")}</TableCell>
+              <TableCell>{t("lastName")}</TableCell>
+              <TableCell>{t("drinkNum")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((row: any) => (
-              <ExpandableRow key={row.name} row={row} />
+              <ExpandableRow key={row.name} row={row} t={t} />
             ))}
           </TableBody>
         </Table>
@@ -51,7 +55,7 @@ export const DrinkRuns = () => {
   );
 };
 
-const ExpandableRow = ({ row }: { row: any }) => {
+const ExpandableRow = ({ row, t }: { row: any; t: t }) => {
   const [open, setOpen] = useState(false);
 
   const orders = row.orders;
@@ -80,14 +84,13 @@ const ExpandableRow = ({ row }: { row: any }) => {
             <Table aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">Requestee</TableCell>
-                  <TableCell align="center">Name</TableCell>
-                  <TableCell align="center">Type</TableCell>
-                  <TableCell align="center">Additional Specification</TableCell>
+                  <TableCell align="center">{t("requestee")}</TableCell>
+                  <TableCell align="center">{t("name")}</TableCell>
+                  <TableCell align="center">{t("type")}</TableCell>
+                  <TableCell align="center">{t("additionalSpec")}</TableCell>
                 </TableRow>
               </TableHead>
               {orders.map((order: any) => {
-                console.log(order);
                 return (
                   <TableBody>
                     <TableRow>
