@@ -2,7 +2,8 @@ import { Box, Button, Modal, Typography } from "@mui/material";
 import withTranslation from "hocs/withTranslation/withTranslation";
 import AddNewOrExistingUser from "./components/AddNewOrExistingUser";
 import SelectUsersDrink from "./components/SelectUsersDrink";
-import { useEffect, useState } from "react";
+import { DrinkRunUsersTable } from "./components/DrinkRunUsersTable";
+import useDrinkRun from "context/DrinkRunContext";
 
 const style = {
   position: "absolute",
@@ -16,77 +17,15 @@ const style = {
   p: 4,
 };
 
-export interface DrinkRunError {
-  user: string;
-  drinkChoice: string;
-}
-export interface ValidUser {
-  id: string;
-  firstName: string;
-  lastName: string;
-  drinkOrders: DrinkOrder[];
-}
-
-export interface InvalidUser {
-  title: string;
-}
-
-export type User = ValidUser | InvalidUser | null;
-
-export interface AdditionalSpecification {
-  key: string;
-  value: string;
-}
-
-export interface DrinkOrder {
-  id: string;
-  userId: string;
-  name: string;
-  type: string;
-  additionalSpecification: AdditionalSpecification[];
-}
-
-export function isInvalidUser(user: User): user is InvalidUser {
-  return (user as InvalidUser)?.title !== undefined;
-}
-
-export function isValidUser(user: User): user is ValidUser {
-  return (user as ValidUser)?.id !== undefined;
-}
-
 export const NewDrinkRun = ({ open, setOpen }: any) => {
-  const [currentDrinkRunUsers, setCurrentDrinkRunUsers] = useState<ValidUser[]>(
-    []
-  );
-  const [user, setUser] = useState<User>(null);
-  const [error, setError] = useState<DrinkRunError>({
-    user: "",
-    drinkChoice: "",
-  });
+  const { clearDrinkRunUsers, clearNewUser, clearErrors } = useDrinkRun();
 
   const handleClose = () => {
+    clearNewUser();
+    clearDrinkRunUsers();
+    clearErrors();
     setOpen(false);
   };
-
-  useEffect(() => {
-    function setUserWithoutDuplicates(
-      usersArray: ValidUser[],
-      newUser: ValidUser
-    ) {
-      if (usersArray.some((user) => user.id === newUser.id)) {
-        return usersArray;
-      }
-
-      return [...usersArray, newUser];
-    }
-
-    if (isValidUser(user) && user.drinkOrders.length) {
-      setCurrentDrinkRunUsers((prevUsers) =>
-        setUserWithoutDuplicates(prevUsers, user)
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -95,19 +34,9 @@ export const NewDrinkRun = ({ open, setOpen }: any) => {
           Create Drink Run
         </Typography>
 
-        <AddNewOrExistingUser
-          user={user}
-          setUser={setUser}
-          setError={setError}
-          error={error}
-        />
-        {isValidUser(user) && !user.drinkOrders.length && (
-          <SelectUsersDrink user={user} setError={setError} error={error} />
-        )}
-
-        <p id="parent-modal-description">
-          TABLE FOR USERS AND THEIR DRINKS HERE
-        </p>
+        <AddNewOrExistingUser />
+        <SelectUsersDrink />
+        <DrinkRunUsersTable />
 
         <Button>Create drink run</Button>
       </Box>

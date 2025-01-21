@@ -15,7 +15,6 @@ export const LandingPage = ({ t }: LandingPageProps) => {
     <div>
       <Button onClick={() => setNewDrinkRunModal(true)}>New Drink Run</Button>
       <DrinkRuns />
-
       <NewDrinkRun open={newDrinkRunModalOpen} setOpen={setNewDrinkRunModal} />
     </div>
   );

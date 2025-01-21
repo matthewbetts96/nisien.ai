@@ -1,59 +1,36 @@
-import { TextField, Typography } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import withTranslation from "hocs/withTranslation/withTranslation";
-import {
-  AdditionalSpecification,
-  DrinkOrder,
-  DrinkRunError,
-  User,
-} from "../NewDrinkRun";
-import { useUpdateDrinkOrder } from "hooks/useDrinkOrder/useUpdateDrinkOrder";
-import { useState } from "react";
+import useDrinkRun from "context/DrinkRunContext";
 
-interface SelectUsersDrinkProps {
-  setError: (error: DrinkRunError) => void;
-  error: DrinkRunError;
-  user: User | null;
-}
+export const SelectUsersDrink = () => {
+  const {
+    newUser,
+    error,
+    newDrinkOrder,
+    addDrinkChoice,
+    addAdditionalSpecification,
+    handleAddDrinkOrder,
+  } = useDrinkRun();
 
-export const SelectUsersDrink = ({
-  setError,
-  error,
-  user,
-}: SelectUsersDrinkProps) => {
-  const { mutate: addDrinkOrder } = useUpdateDrinkOrder();
-  const [drinkChoice, setDrinkChoice] = useState<DrinkOrder | null>(null);
-  const [additionalSpecification, setAdditionalSpecification] = useState<
-    AdditionalSpecification[]
-  >([]);
+  const hasEnteredName = newUser.firstName && newUser.lastName;
 
-  console.log(additionalSpecification);
+  if (!hasEnteredName) {
+    return <></>;
+  }
 
-  const handleChange = ({
-    target: { value },
-  }: {
-    target: { value: string };
-  }) => {
-    if (!value) {
-      setError({ ...error, drinkChoice: "Please enter a drink" });
-      return;
-    }
-    setError({ ...error, drinkChoice: "" });
-    // addDrinkOrder(
-    //   {},
-    //   {
-    //     onSuccess: (data: any) => {
-    //       console.log("User added successfully:", data);
-    //     },
-    //     onError: (apiError: any) => {
-    //       setError({
-    //         ...error,
-    //         user: "An error occurred, please try again later.",
-    //       });
-    //       console.error("Error adding user:", apiError);
-    //     },
-    //   }
-    // );
-  };
+  const hasDrinkOrders = !!newUser.drinkOrders?.length;
+
+  if (hasDrinkOrders) {
+    return <></>;
+  }
+
+  const additionalSpecification = newDrinkOrder?.additionalSpecification || [];
+
+  const handleChange =
+    (key: "name" | "type") =>
+    ({ target: { value } }: { target: { value: string } }) => {
+      addDrinkChoice(key, value);
+    };
 
   return (
     <div>
@@ -63,14 +40,14 @@ export const SelectUsersDrink = ({
           helperText={error?.drinkChoice}
           label="Add Drink Name"
           variant="outlined"
-          onChange={handleChange}
+          onChange={handleChange("name")}
         />
         <TextField
           error={!!error?.drinkChoice}
           helperText={error?.drinkChoice}
           label="Add Drink Type"
           variant="outlined"
-          onChange={handleChange}
+          onChange={handleChange("type")}
         />
       </div>
       <div>
@@ -96,7 +73,7 @@ export const SelectUsersDrink = ({
                   key: newValue,
                 };
 
-                setAdditionalSpecification(updatedSpecifications);
+                addAdditionalSpecification(updatedSpecifications);
               }}
             />
             <TextField
@@ -113,14 +90,14 @@ export const SelectUsersDrink = ({
                   value: newValue,
                 };
 
-                setAdditionalSpecification(updatedSpecifications);
+                addAdditionalSpecification(updatedSpecifications);
               }}
             />
           </div>
         );
       })}
 
-      <button onClick={() => ""}>Add drink</button>
+      <Button onClick={handleAddDrinkOrder}>Add drink</Button>
     </div>
   );
 };

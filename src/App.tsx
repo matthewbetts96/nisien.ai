@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { DrinkRunProvider } from "context/DrinkRunContext";
 import AppRoutes from "routes/AppRoutes";
 
 const queryClient = new QueryClient();
@@ -6,7 +7,9 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AppRoutes />
+      <DrinkRunProvider>
+        <AppRoutes />
+      </DrinkRunProvider>
     </QueryClientProvider>
   );
 }
