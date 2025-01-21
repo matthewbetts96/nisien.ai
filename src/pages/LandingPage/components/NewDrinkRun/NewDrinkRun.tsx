@@ -18,13 +18,20 @@ const style = {
 };
 
 export const NewDrinkRun = ({ open, setOpen }: any) => {
-  const { clearDrinkRunUsers, clearNewUser, clearErrors, createNewDrinkRun } =
-    useDrinkRun();
+  const {
+    clearDrinkRunUsers,
+    clearNewUser,
+    clearErrors,
+    createNewDrinkRun,
+    clearDrinkOrder,
+    drinkRunUsers,
+  } = useDrinkRun();
 
   const handleClose = () => {
     clearNewUser();
     clearDrinkRunUsers();
     clearErrors();
+    clearDrinkOrder();
     setOpen(false);
   };
 
@@ -44,8 +51,9 @@ export const NewDrinkRun = ({ open, setOpen }: any) => {
             createNewDrinkRun();
             handleClose();
           }}
+          disabled={!drinkRunUsers.length}
         >
-          Create drink run
+          Create Drink run
         </Button>
       </Box>
     </Modal>

@@ -26,31 +26,27 @@ export interface AdditionalSpecification {
 }
 
 interface DrinkRunContextProps {
-  addNewDrinkRunUser: (order: User) => void;
-  drinkRunUsers: User[]; //list of valid users for the next drink run
-  newDrinkOrder: DrinkOrder | null;
-
   newUser: User;
+  setNewUser: React.Dispatch<React.SetStateAction<User>>;
+  drinkRunUsers: User[];
+  newDrinkOrder: DrinkOrder | null;
+  error: DrinkRunError;
   addNewUser: (title: string) => void;
   clearNewUser: () => void;
-  clearDrinkRunUsers: () => void;
-
-  error: DrinkRunError;
-  setDrinkRunError: (error: DrinkRunError) => void;
-
+  addNewDrinkRunUser: (order: User) => void;
   addDrinkChoice: (type: "name" | "type", input: string) => void;
   addAdditionalSpecification: (input: AdditionalSpecification[]) => void;
-
   handleAddDrinkOrder: () => void;
-  clearErrors: () => void;
-  setNewUser: any;
-
   createNewDrinkRun: () => void;
+  clearDrinkOrder: () => void;
+  clearDrinkRunUsers: () => void;
+  clearErrors: () => void;
 }
 
 export interface DrinkRunError {
   user: string;
   drinkChoice: string;
+  additionalSpecification: string;
 }
 
 export const DrinkRunContext = createContext<DrinkRunContextProps | undefined>(
@@ -65,20 +61,39 @@ export const DrinkRunProvider: React.FC<DrinkRunProviderProps> = ({
   children,
 }) => {
   const [newUser, setNewUser] = useState<User>({ firstName: "", lastName: "" });
+  const [newDrinkOrder, setNewDrinkOrder] = useState<DrinkOrder | null>(null);
+  const [drinkRunUsers, setDrinkRunUsers] = useState<User[]>([]);
   const [error, setError] = useState<DrinkRunError>({
     user: "",
     drinkChoice: "",
+    additionalSpecification: "",
   });
-
-  const [newDrinkOrder, setNewDrinkOrder] = useState<DrinkOrder | null>(null);
-
-  const [drinkRunUsers, setDrinkRunUsers] = useState<User[]>([]);
 
   const { mutate: addUser } = useCreateUser();
   const { refetch } = useGetUsers();
   const { mutate: addDrinkOrder } = useUpdateDrinkOrder();
   const { mutate: createDrinkRun } = useUpdateDrinkRun();
   const { refetch: refetchDrinkRun } = useGetDrinkRun();
+
+  const clearDrinkOrder = () => {
+    setNewDrinkOrder(null);
+  };
+
+  const clearNewUser = () => {
+    setNewUser({ firstName: "", lastName: "" });
+  };
+
+  const clearDrinkRunUsers = () => {
+    setDrinkRunUsers([]);
+  };
+
+  const clearErrors = () => {
+    setError({
+      user: "",
+      drinkChoice: "",
+      additionalSpecification: "",
+    });
+  };
 
   const addNewUser = (title: string) => {
     const [firstName, lastName] = title.split(/ (.*)/);
@@ -104,25 +119,6 @@ export const DrinkRunProvider: React.FC<DrinkRunProviderProps> = ({
         },
       }
     );
-  };
-
-  const clearNewUser = () => {
-    setNewUser({ firstName: "", lastName: "" });
-  };
-
-  const clearDrinkRunUsers = () => {
-    setDrinkRunUsers([]);
-  };
-
-  const clearErrors = () => {
-    setError({
-      user: "",
-      drinkChoice: "",
-    });
-  };
-
-  const setDrinkRunError = (e: DrinkRunError) => {
-    setError(e);
   };
 
   const addNewDrinkRunUser = (order: User) => {
@@ -216,11 +212,11 @@ export const DrinkRunProvider: React.FC<DrinkRunProviderProps> = ({
       value={{
         addNewUser,
         clearNewUser,
+        clearDrinkOrder,
         newUser,
         addNewDrinkRunUser,
         drinkRunUsers,
         error,
-        setDrinkRunError,
         clearDrinkRunUsers,
         addDrinkChoice,
         addAdditionalSpecification,

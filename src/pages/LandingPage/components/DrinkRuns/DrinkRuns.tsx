@@ -1,4 +1,7 @@
 import {
+  Box,
+  Collapse,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -6,16 +9,20 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import withTranslation from "hocs/withTranslation/withTranslation";
+import {
+  KeyboardArrowDown,
+  KeyboardArrowUp,
+  InfoOutlined,
+} from "@mui/icons-material";
 import { useGetDrinkRun } from "hooks/useDrinkRun/useGetDrinkRun";
 import { withErrorAndLoadingHandler as ErrorAndLoadingHandler } from "hocs/withErrorAndLoadingHandler/withErrorAndLoadingHandler";
+import { useState } from "react";
 
 export const DrinkRuns = () => {
-  const { data, isLoading, error, refetch } = useGetDrinkRun();
-
-  console.log(data);
-  //todo table
+  const { data = [], isLoading, error, refetch } = useGetDrinkRun();
 
   return (
     <ErrorAndLoadingHandler
@@ -24,32 +31,81 @@ export const DrinkRuns = () => {
       refetch={refetch}
     >
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <Table aria-label="customized table">
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              <TableCell></TableCell>
+              <TableCell>First Name</TableCell>
+              <TableCell>Last Name</TableCell>
+              <TableCell>Number of Drinks</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {[].map((row: any) => (
-              <TableRow key={row.name}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-              </TableRow>
+            {data.map((row: any) => (
+              <ExpandableRow key={row.name} row={row} />
             ))}
           </TableBody>
         </Table>
       </TableContainer>
     </ErrorAndLoadingHandler>
+  );
+};
+
+const ExpandableRow = ({ row }: { row: any }) => {
+  const [open, setOpen] = useState(false);
+
+  const orders = row.orders;
+  const drinkMaker = row.drinkMaker;
+
+  return (
+    <>
+      <TableRow>
+        <TableCell>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+          </IconButton>
+        </TableCell>
+        <TableCell>{drinkMaker.firstName}</TableCell>
+        <TableCell>{drinkMaker.lastName}</TableCell>
+        <TableCell>{orders.length}</TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Table aria-label="customized table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center">Requestee</TableCell>
+                  <TableCell align="center">Name</TableCell>
+                  <TableCell align="center">Type</TableCell>
+                  <TableCell align="center">Additional Specification</TableCell>
+                </TableRow>
+              </TableHead>
+              {orders.map((order: any) => {
+                console.log(order);
+                return (
+                  <TableBody>
+                    <TableRow>
+                      <TableCell align="center"></TableCell>
+                      <TableCell align="center">{order.name}</TableCell>
+                      <TableCell align="center">{order.type}</TableCell>
+                      <TableCell align="center">
+                        <InfoOutlined />
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                );
+              })}
+            </Table>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </>
   );
 };
 

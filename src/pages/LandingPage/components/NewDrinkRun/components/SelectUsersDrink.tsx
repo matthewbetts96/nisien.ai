@@ -32,6 +32,21 @@ export const SelectUsersDrink = () => {
       addDrinkChoice(key, value);
     };
 
+  const isDisabled = (): boolean => {
+    if (
+      !newDrinkOrder ||
+      !newDrinkOrder.name ||
+      !newDrinkOrder.type ||
+      !newDrinkOrder.additionalSpecification?.length ||
+      newDrinkOrder.additionalSpecification.some(
+        ({ key, value }) => !key || !value
+      )
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <div>
       <div>
@@ -97,7 +112,9 @@ export const SelectUsersDrink = () => {
         );
       })}
 
-      <Button onClick={handleAddDrinkOrder}>Add drink</Button>
+      <Button onClick={handleAddDrinkOrder} disabled={isDisabled()}>
+        Add drink
+      </Button>
     </div>
   );
 };
