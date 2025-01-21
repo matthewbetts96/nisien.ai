@@ -2,7 +2,11 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Node, docker, npm required
+For this project to work you will first need to install the following items:
+
+- Docker
+- Node (LTS is best)
+- NPM
 
 ### Create .env file
 
@@ -21,3 +25,7 @@ Run `npm i`
 ### Run React App
 
 Run `npm start`
+
+# ADR's
+
+To read the ADR's for this project navigate to the ADR folder [here.](./adr/)
