@@ -9,6 +9,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import withTranslation, { t } from "hocs/withTranslation/withTranslation";
@@ -20,6 +21,7 @@ import {
 import { useGetDrinkRun } from "hooks/useDrinkRun/useGetDrinkRun";
 import { withErrorAndLoadingHandler as ErrorAndLoadingHandler } from "hocs/withErrorAndLoadingHandler/withErrorAndLoadingHandler";
 import { useState } from "react";
+import { DrinkOrder } from "context/DrinkRunContext";
 
 interface DrinkRunsProps {
   t: t;
@@ -90,7 +92,7 @@ const ExpandableRow = ({ row, t }: { row: any; t: t }) => {
                   <TableCell align="center">{t("additionalSpec")}</TableCell>
                 </TableRow>
               </TableHead>
-              {orders.map((order: any) => {
+              {orders.map((order: DrinkOrder) => {
                 return (
                   <TableBody>
                     <TableRow>
@@ -98,7 +100,17 @@ const ExpandableRow = ({ row, t }: { row: any; t: t }) => {
                       <TableCell align="center">{order.name}</TableCell>
                       <TableCell align="center">{order.type}</TableCell>
                       <TableCell align="center">
-                        <InfoOutlined />
+                        <Tooltip
+                          title={
+                            <div>
+                              {Object.entries(
+                                order.additionalSpecification
+                              ).map((i) => `${i[0]}: ${i[1]}`)}
+                            </div>
+                          }
+                        >
+                          <InfoOutlined />
+                        </Tooltip>
                       </TableCell>
                     </TableRow>
                   </TableBody>
