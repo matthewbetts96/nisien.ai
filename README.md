@@ -8,7 +8,7 @@ For this project to work you will first need to install the following items:
 - Node (LTS is best)
 - NPM
 
-### Create .env file
+### Update .env file and add password
 
 For security purposes the password to the docker compose file has been omitted. Before running `docker compose up` edit the `.env` file and add the password, replacing the "".
 
@@ -20,11 +20,13 @@ Run `docker compose up`
 
 ### Install react dependancies
 
-Run `npm i`
+Navigate to `/src` and run `npm i`
 
 ### Run React App
 
-Run `npm start`
+Run `npm start`.
+
+The app should start up successfully in the browser.
 
 # ADR's
 
