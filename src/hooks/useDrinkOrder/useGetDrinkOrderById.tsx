@@ -5,7 +5,7 @@ export const useGetDrinkOrderById = (id: number) => {
   return useQuery({
     queryKey: ["DrinkOrderById"],
     queryFn: async (): Promise<any> => {
-      const response = await fetch(`/v1/DrinkOrder/${id}`);
+      const response = await fetch(`/DrinkOrder/${id}`);
       return await response.json();
     },
     staleTime: STALE_TIME,

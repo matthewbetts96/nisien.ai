@@ -6,7 +6,7 @@ export const useGetDrinkOrder = () => {
   return useQuery({
     queryKey: ["DrinkOrder"],
     queryFn: async (): Promise<any> => {
-      const response = await apiClient.get("/v1/DrinkOrder");
+      const response = await apiClient.get("/DrinkOrder");
       return await response.data;
     },
     staleTime: STALE_TIME,

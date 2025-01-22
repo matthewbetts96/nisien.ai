@@ -1,10 +1,10 @@
 import { Box, Button, Modal, Typography } from "@mui/material";
 import withTranslation, { t } from "hocs/withTranslation/withTranslation";
-import AddNewOrExistingUser from "./components/AddNewOrExistingUser";
-import SelectUsersDrink from "./components/SelectUsersDrink";
-import DrinkRunUsersTable from "./components/DrinkRunUsersTable";
+import AddNewOrExistingUser from "./components/AddNewOrExistingUser/AddNewOrExistingUser";
 import useDrinkRun from "context/DrinkRunContext";
 import classes from "./NewDrinkRun.module.css";
+import DrinkRunUsersTable from "./components/DrinkRunUsersTable/DrinkRunUsersTable";
+import SelectUsersDrink from "./components/SelectUsersDrink/SelectUsersDrink";
 
 interface CreateRunProps {
   t: t;
@@ -41,12 +41,8 @@ export const NewDrinkRun = ({ open, setOpen, t }: CreateRunProps) => {
           {t("newRun")}
         </Typography>
         <AddNewOrExistingUser />
-        <div className={classes.spacer}>
-          <SelectUsersDrink />
-        </div>
-        <div className={classes.spacer}>
-          <DrinkRunUsersTable />
-        </div>
+        <div className={classes.spacer}>{<SelectUsersDrink />}</div>
+        <div className={classes.spacer}>{<DrinkRunUsersTable />}</div>
         <div className={classes.spacer}>
           <Button
             onClick={() => {

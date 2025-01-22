@@ -15,11 +15,11 @@ interface DrinkRunUsersTableProps {
   t: t;
 }
 
-const DrinkRunUsersTable = ({ t }: DrinkRunUsersTableProps) => {
+export const DrinkRunUsersTable = ({ t }: DrinkRunUsersTableProps) => {
   const { drinkRunUsers } = useDrinkRun();
 
   if (!drinkRunUsers.length) {
-    return <></>;
+    return <div id="no-drink-run-users" />;
   }
 
   return (

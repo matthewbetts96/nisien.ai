@@ -5,7 +5,7 @@ interface LanguageContextProps {
   setLanguage: (language: string) => void;
 }
 
-const LanguageContext = createContext<LanguageContextProps | null>(null);
+export const LanguageContext = createContext<LanguageContextProps | null>(null);
 
 export const useLanguage = () => {
   const context = useContext(LanguageContext);

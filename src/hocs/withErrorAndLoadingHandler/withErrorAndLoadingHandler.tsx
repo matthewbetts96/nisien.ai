@@ -21,46 +21,19 @@ export const withErrorAndLoadingHandler = ({
   children,
 }: ErrorAndLoadingHandlerProps) => {
   if (isLoading) {
-    return (
-      //   <LoadingContainer data-testid={"loading"}>
-      <CircularProgress />
-      //   </LoadingContainer>
-    );
+    return <CircularProgress data-testid="loading" />;
   }
 
   if (error) {
     return (
-      //   <ErrorContainer>
       <div>
         <div>Something went wrong.</div>
         <Button variant="contained" color={"success"} onClick={() => refetch()}>
           Retry
         </Button>
       </div>
-      //   </ErrorContainer>
     );
   }
 
   return children;
 };
-
-// const LoadingContainer = styled.div`
-//   width: 100%;
-//   height: 200px;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// `;
-
-// const ErrorContainer = styled.div`
-//   width: 100%;
-//   height: 200px;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   flex-direction: column;
-
-//   > button {
-//     margin-top: 10px;
-//   }
-// `;

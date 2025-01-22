@@ -20,13 +20,13 @@ export const SelectUsersDrink = ({ t }: SelectUsersDrinkProps) => {
   const hasEnteredName = newUser.firstName && newUser.lastName;
 
   if (!hasEnteredName) {
-    return <></>;
+    return <div data-testid="no-name" />;
   }
 
   const hasDrinkOrders = !!newUser.drinkOrders?.length;
 
   if (hasDrinkOrders) {
-    return <></>;
+    return <div data-testid="no-drink-orders" />;
   }
 
   const additionalSpecification = newDrinkOrder?.additionalSpecification || [];
