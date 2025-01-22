@@ -17,5 +17,6 @@
   "addDrink": "Add Drink",
   "drinkName": "Drink Name",
   "drinkType": "Drink Type",
-  "currentUsers": "Currently added users:"
+  "currentUsers": "Currently added users:",
+  "noRuns": "No drink runs exist at this time."
 }

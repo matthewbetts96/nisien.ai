@@ -1,5 +1,4 @@
-import { Button, CircularProgress } from "@mui/material";
-// import styled from "styled-components";
+import { Button, Card, CircularProgress } from "@mui/material";
 
 interface ErrorAndLoadingHandlerProps {
   isLoading: boolean;
@@ -9,8 +8,8 @@ interface ErrorAndLoadingHandlerProps {
 }
 
 /**
- * A simple HOC that can be wrapped around any component that is making a request (doesn't have
- * to be the product query) supports loading and error state as well as giving the option for
+ * A simple HOC that can be wrapped around any component that is making a request
+ * supports loading and error state as well as giving the option for
  * retrying any failed requests
  */
 
@@ -26,12 +25,12 @@ export const withErrorAndLoadingHandler = ({
 
   if (error) {
     return (
-      <div>
+      <Card>
         <div>Something went wrong.</div>
         <Button variant="contained" color={"success"} onClick={() => refetch()}>
           Retry
         </Button>
-      </div>
+      </Card>
     );
   }
 

@@ -1,4 +1,5 @@
 import {
+  Card,
   Collapse,
   IconButton,
   Paper,
@@ -21,6 +22,7 @@ import { withErrorAndLoadingHandler as ErrorAndLoadingHandler } from "hocs/withE
 import { useState } from "react";
 import { DrinkOrder, User } from "context/DrinkRunContext";
 import { useGetUsers } from "hooks/useUsers/useGetUsers";
+import classes from "./DrinkRuns.module.css";
 
 interface DrinkRunsProps {
   t: t;
@@ -28,6 +30,10 @@ interface DrinkRunsProps {
 
 export const DrinkRuns = ({ t }: DrinkRunsProps) => {
   const { data = [], isLoading, error, refetch } = useGetDrinkRun();
+
+  if (!data.length) {
+    return <Card className={classes.noData}>{t("noRuns")}</Card>;
+  }
 
   return (
     <ErrorAndLoadingHandler
