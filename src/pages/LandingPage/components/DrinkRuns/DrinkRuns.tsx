@@ -1,5 +1,4 @@
 import {
-  Box,
   Collapse,
   IconButton,
   Paper,
@@ -10,7 +9,6 @@ import {
   TableHead,
   TableRow,
   Tooltip,
-  Typography,
 } from "@mui/material";
 import withTranslation, { t } from "hocs/withTranslation/withTranslation";
 import {
@@ -21,7 +19,8 @@ import {
 import { useGetDrinkRun } from "hooks/useDrinkRun/useGetDrinkRun";
 import { withErrorAndLoadingHandler as ErrorAndLoadingHandler } from "hocs/withErrorAndLoadingHandler/withErrorAndLoadingHandler";
 import { useState } from "react";
-import { DrinkOrder } from "context/DrinkRunContext";
+import { DrinkOrder, User } from "context/DrinkRunContext";
+import { useGetUsers } from "hooks/useUsers/useGetUsers";
 
 interface DrinkRunsProps {
   t: t;
@@ -59,9 +58,16 @@ export const DrinkRuns = ({ t }: DrinkRunsProps) => {
 
 const ExpandableRow = ({ row, t }: { row: any; t: t }) => {
   const [open, setOpen] = useState(false);
+  const { data: users } = useGetUsers();
+  console.log(users);
 
   const orders = row.orders;
   const drinkMaker = row.drinkMaker;
+
+  const findUserName = (id: string) => {
+    const { lastName, firstName } = users.find((i: User) => i.id === id);
+    return `${firstName} ${lastName}`;
+  };
 
   return (
     <>
@@ -96,7 +102,9 @@ const ExpandableRow = ({ row, t }: { row: any; t: t }) => {
                 return (
                   <TableBody>
                     <TableRow>
-                      <TableCell align="center"></TableCell>
+                      <TableCell align="center">
+                        {findUserName(order.userId)}
+                      </TableCell>
                       <TableCell align="center">{order.name}</TableCell>
                       <TableCell align="center">{order.type}</TableCell>
                       <TableCell align="center">
